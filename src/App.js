@@ -9,7 +9,6 @@ function App() {
   const [isLoding, setIsLoding] = useState(false);
   const [error, setError] = useState(null);
 
-
   // GET request
   const fetchAlbumsHandler = useCallback(async () => {
     setIsLoding(true);
@@ -28,6 +27,7 @@ function App() {
         return {
           id: AlbumsData.id,
           title: AlbumsData.title,
+          userId: AlbumsData.userId,
         };
       });
       setAlbums(transformedAlbums);
@@ -62,10 +62,44 @@ function App() {
     }
   }
 
+  // PUT request
+  async function editAlbumsHandler(album) {
+    try {
+      const response = await fetch(
+        `https://jsonplaceholder.typicode.com/posts/${album.id}`,
+        {
+          method: 'PUT',
+          body: JSON.stringify(album),
+          headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+          },
+        }
+      );
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      setError(error.message);
+    }
+  }
+
+  // DELETE request
+  const deleteAlbumHandler = (album) => {
+    fetch(`https://jsonplaceholder.typicode.com/posts/${album.id}`, {
+      method: 'DELETE',
+    });
+    console.log(` ${album.id} is deleted`);
+  };
+
   let content = <p>Found no Albums.</p>;
 
   if (albums.length > 0) {
-    content = <AlbumsList albums={albums} />;
+    content = (
+      <AlbumsList
+        albums={albums}
+        onEdit={editAlbumsHandler}
+        onDelete={deleteAlbumHandler}
+      />
+    );
   }
 
   if (error) {

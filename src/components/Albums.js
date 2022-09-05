@@ -6,16 +6,31 @@ import Edit from './Edit';
 const Albums = (props) => {
   const [isEditing, SetIsEditing] = useState(false);
 
-  
+  const onSaveEditHandler = (enteredEdit) => {
+    const editData = {
+      userId: props.userId,
+      id: props.id,
+      ...enteredEdit,
+    };
+    props.onEdit(editData);
 
-  const editHandler = (isEditing) => {
+    SetIsEditing(false);
+  };
+
+  const editHandler = () => {
     SetIsEditing(true);
   };
   const stopEditingHandler = () => {
     SetIsEditing(false);
   };
 
-  const deleteHandler = () => {};
+  const deleteHandler = () => {
+    const deleteAlbum = {
+      id: props.id,
+    };
+    props.onDelete(deleteAlbum);
+  };
+
   return (
     <li className={classes.albums}>
       <div>
@@ -33,7 +48,9 @@ const Albums = (props) => {
           onClick={deleteHandler}
         />
       </div>
-      {isEditing && <Edit onCancle={stopEditingHandler} />}
+      {isEditing && (
+        <Edit onCancle={stopEditingHandler} onEditData={onSaveEditHandler} />
+      )}
     </li>
   );
 };

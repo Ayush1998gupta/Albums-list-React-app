@@ -8,8 +8,7 @@ export default function Edit(props) {
     const album = {
       title: titleRef.current.value,
     };
-
-    props.onAddAlbums(album);
+    props.onEditData(album);
   }
   return (
     <form onSubmit={submitHandler} className={classes.edit}>
