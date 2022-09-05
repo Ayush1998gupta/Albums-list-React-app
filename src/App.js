@@ -9,6 +9,8 @@ function App() {
   const [isLoding, setIsLoding] = useState(false);
   const [error, setError] = useState(null);
 
+
+  // GET request
   const fetchAlbumsHandler = useCallback(async () => {
     setIsLoding(true);
     setError(null);
@@ -38,6 +40,8 @@ function App() {
   useEffect(() => {
     fetchAlbumsHandler();
   }, [fetchAlbumsHandler]);
+
+  // POST request
 
   async function addAlbumsHandler(album) {
     try {

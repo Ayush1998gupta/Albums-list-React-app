@@ -9,8 +9,7 @@ const AlbumsList = (props) => {
       {props.albums.map((albums) => (
         <Albums
           key={albums.id}
-          title={albums.title}
-        />
+          title={albums.title} />
       ))}
     </ul>
   );
